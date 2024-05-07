@@ -1,0 +1,7 @@
+<label class="form-label">{{label}} <span class="text-danger">*</span></label>
+<input type="text" [class.is-invalid]="control.touched && control.invalid" class="form-control form-control-lg"
+    [formControl]="control" placeholder="ex: April 02 2024" bsDatepicker [bsConfig]="bsConfig" [minDate]="minDate"
+    [maxDate]="maxDate" autocomplete="off">
+<div *ngIf="control.errors?.['required']" class="invalid-feedback">
+    {{label}} is required
+</div>

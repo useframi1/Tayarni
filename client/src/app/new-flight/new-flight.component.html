@@ -1,0 +1,78 @@
+<div class="container mt-4">
+    <p class="fs-2 text-uppercase fw-medium text-info">Add a new flight</p>
+    <form [formGroup]="flightForm" class="mt-4 pb-5" (ngSubmit)="flightForm.valid && save()">
+        <div class="col-lg-6 form-group mb-4">
+            <div class="row row-cols-lg-2 row-cols-md-2 row-cols-1 gy-4">
+                <div class="col">
+                    <app-date-picker [formControl]="$any(flightForm.controls['depDate'])" [label]="'Departure Date'"
+                        [minDate]="minDepDate" [maxDate]="maxDepDate"></app-date-picker>
+                </div>
+                <div class="col">
+                    <app-time-picker [formControl]="$any(flightForm.controls['depTime'])"
+                        [label]="'Departure Time'"></app-time-picker>
+                </div>
+                <div class="col">
+                    <app-date-picker [formControl]="$any(flightForm.controls['arrDate'])" [label]="'Arrival Date'"
+                        [minDate]="minArrDate" [maxDate]="maxArrDate"></app-date-picker>
+                </div>
+                <div class="col">
+                    <app-time-picker [formControl]="$any(flightForm.controls['arrTime'])"
+                        [label]="'Arrival Time'"></app-time-picker>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 form-group mb-4">
+            <div class="row">
+                <div class="col-sm-6">
+                    <app-text-input [formControl]="$any(flightForm.controls['orgAirport'])" [label]="'Origin Airport'"
+                        [list]="airports"></app-text-input>
+                </div>
+                <div class="col-sm-6">
+                    <app-text-input [formControl]="$any(flightForm.controls['destAirport'])"
+                        [label]="'Destination Airport'" [list]="airports"></app-text-input>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 form-group mb-4">
+            <app-text-input [formControl]="$any(flightForm.controls['airline'])" [label]="'Airline'"
+                [list]="airlines"></app-text-input>
+        </div>
+        <div class="col-lg-6 form-group mb-4">
+            <app-text-input [formControl]="$any(flightForm.controls['tailNum'])" [label]="'Tail Number'"
+                [list]="tailNums"></app-text-input>
+        </div>
+        <div class="col-lg-6 form-group mb-4">
+            <app-text-input [formControl]="$any(flightForm.controls['distance'])" [label]="'Distance (in miles)'"
+                [type]="'number'" [min]="minDistance"></app-text-input>
+        </div>
+        <div class="col-lg-6">
+            <div class="text-end">
+                <button [disabled]="!flightForm.valid" class="btn btn-info text-white me-3" type="submit">Save</button>
+                <button class="btn btn-secondary text-white" type="button" routerLink="/">Cancel</button>
+                <div class="modal" tabindex="-1" id="predictionModal" data-bs-backdrop="static"
+                    data-bs-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Our Prediction</h5>
+                            </div>
+                            <div class="modal-body text-center">
+                                <p *ngIf="delayed">We predict that the flight will be delayed for more than 30
+                                    minutes</p>
+                                <p *ngIf="!delayed">We predict that the flight will <strong>not</strong> be delayed
+                                    for more than 30
+                                    minutes</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-info text-white" data-bs-dismiss="modal"
+                                    routerLink="/">Go to
+                                    home
+                                    page</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

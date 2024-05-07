@@ -1,0 +1,114 @@
+<div class="container d-flex flex-column align-items-center py-5">
+    <h1 class="display-3 fw-medium text-center">Welcome to Tayarni</h1>
+    <p class="lead text-info text-center">Making sure you're always on time.</p>
+    <hr class="w-75">
+    <ng-container *ngIf="!(accountService.currentUser$ | async)">
+        <button class="btn btn-lg btn-info text-white fw-bold" routerLink="/register">Register Now</button>
+        <p class="fw-light mt-2">
+            <a class="link-secondary link-underline-opacity-0 link-underline-opacity-100-hover" routerLink="/login">
+                Already a user? Login now...
+            </a>
+        </p>
+    </ng-container>
+
+    <ng-container *ngIf="(accountService.currentUser$ | async) && ((busyService.loading$ | async) === false)">
+        <div class="align-self-start w-100">
+            <div class="row align-items-center mb-3">
+                <div class="col-sm">
+                    <p class="fs-3 fw-bold">Flight history</p>
+                </div>
+                <div *ngIf="history.length > 0" class="col-sm d-flex justify-content-sm-end">
+                    <button class="btn btn-info text-white fw-bold" routerLink="/new-flight"><i
+                            class="fa fa-plus-circle me-2"></i>New
+                        flight</button>
+                </div>
+            </div>
+
+            <div class="d-flex overflow-y-auto justify-content-center" id="history">
+                <div *ngIf="history.length > 0"
+                    class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-1 gy-4 w-100">
+                    <div class="col flight" *ngFor="let flight of history">
+                        <div class="card shadow rounded-4 border-info h-100">
+                            <div class="card-body overflow-y-auto d-flex flex-column">
+                                <h4 class="card-title"> <span>{{flight.orgAirportCode}} </span><i
+                                        class="fa fa-arrow-right"></i><span>
+                                        {{flight.destAirportCode}}</span>
+                                </h4>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{convertDate(flight.date)}}</h6>
+                                <p class="card-text fw-lighter mb-0">Departure: <span
+                                        class="fw-normal">{{convertTime(flight.scheduledDepTime)}}</span>
+                                </p>
+                                <p class="card-text fw-lighter mb-1">Arrival: <span
+                                        class="fw-normal">{{convertTime(flight.scheduledArrTime)}}</span>
+                                </p>
+                                <hr class="my-2">
+                                <div class="d-flex flex-column flex-md-row flex-grow-1 align-items-md-center">
+                                    <div class="d-flex align-items-center flex-grow-1">
+                                        <p class="fs-6 text-body-secondary mb-0 fw-bold fst-italic">Predicted to be
+                                            delayed?
+                                            <span class="text-info">{{flight.isDelayedPredicted ? "Yes" : "No"}}</span>
+                                        </p>
+                                    </div>
+                                    <div class="d-flex align-items-center"
+                                        *ngIf="showFeedback(flight.date, flight.isDelayedActual)">
+                                        <button class="btn btn-info text-white rounded-pill fw-bold"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal">Feedback</button>
+                                        <div class="modal fade" id="exampleModal" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Give
+                                                            your feedback</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="text-body-secondary text-center"><small>Was the
+                                                                flight delayed for more
+                                                                than 30
+                                                                minutes?</small>
+                                                        </p>
+
+                                                        <div class="row justify-content-evenly">
+                                                            <div class="col-4 d-flex justify-content-end">
+                                                                <input type="radio" class="btn-check"
+                                                                    name="options-base" id="radioYes" autocomplete="off"
+                                                                    checked>
+                                                                <label class="btn btn-outline-info"
+                                                                    for="radioYes">Yes</label>
+                                                            </div>
+                                                            <div class="col-4 d-flex justify-content-start">
+                                                                <input type="radio" class="btn-check"
+                                                                    name="options-base" id="radioNo" autocomplete="off">
+                                                                <label class="btn btn-outline-info"
+                                                                    for="radioNo">No</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-info text-white"
+                                                            (click)="giveFeedback(flight)"
+                                                            data-bs-dismiss="modal">Save</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="history.length == 0" class="d-flex flex-column align-items-center">
+                    <p class="fw-lighter display-6 text-center">It looks like you don't have any scheduled flights</p>
+                    <button class="btn btn-info btn-lg text-white" routerLink="/new-flight"><i
+                            class="fa fa-plus-circle me-2"></i>Add one
+                        now</button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

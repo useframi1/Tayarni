@@ -1,0 +1,12 @@
+<label class="form-label">{{label}} <span class="text-danger">*</span></label>
+<input type="time" [class.is-invalid]="control.touched && control.invalid" [formControl]="control"
+    class="form-control form-control-lg" autocomplete="off">
+<div *ngIf="control.errors?.['required']" class="invalid-feedback">
+    {{label}} is required
+</div>
+<div *ngIf="control.errors?.['arrivalBeforeDeparture']" class="invalid-feedback">
+    Arrival time cannot be before Departure time
+</div>
+<div *ngIf="control.errors?.['departureBeforeCurrent']" class="invalid-feedback">
+    Departure time cannot be before Current time
+</div>

@@ -1,0 +1,11 @@
+#history {
+  max-height: 30rem;
+}
+
+.flight {
+  height: 15rem;
+}
+
+.btn-check:checked + .btn-outline-info {
+  color: white;
+}
