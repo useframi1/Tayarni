@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for tayarni on 2024-05-07T04:22:46+03:00
+# fly.toml app configuration file generated for tayarni on 2024-05-07T05:11:25+03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -8,6 +8,9 @@ primary_region = 'cdg'
 
 [build]
   image = 'yousseframi/tayarni:latest'
+
+[env]
+  ASPNETCORE_URLS="http://+:8080"
 
 [http_service]
   internal_port = 8080
