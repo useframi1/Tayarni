@@ -1,0 +1,2 @@
+Username,Date,ScheduledArrTime,AirlineName,TailNum,OrgAirport,DestAirport,Distance,ScheduledDepTime,DepTemperature,DepWindSpeed,DepWindDirection,DepPrecipitation,DepRain,DepSnowFall,ArrTemperature,ArrWindSpeed,ArrWindDirection,ArrPrecipitation,ArrRain,ArrSnowFall,IsDelayedPredicted,IsDelayedActual
+youssef,2024-05-05,1800,Alaska Airlines Inc.,050AA,Abilene Regional Airport,Abilene Regional Airport,1000,1700,19.298000335693359,12.475960731506348,133.83094787597656,0.0,0.0,0.0,20.847999572753906,10.439999580383301,133.60289001464844,0.0,0.0,0.0,1,1

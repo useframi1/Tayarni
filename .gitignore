@@ -2,4 +2,4 @@
 *.sqlite
 __pycache__
 *.pkl
-*.csv
+API/Data/Training.csv
