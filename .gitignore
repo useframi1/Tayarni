@@ -3,3 +3,5 @@
 __pycache__
 *.pkl
 API/Data/Training.csv
+ModelAPI/Utilities/Testing_set.csv
+ModelAPI/Utilities/Training_set.csv

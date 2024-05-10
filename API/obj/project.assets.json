@@ -2691,11 +2691,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/youssef/Documents/Spring-2024/Machine-Learning/Tayarni/API/API.csproj",
+      "projectUniqueName": "/Users/youssef/Documents/Spring-2024/Machine-Learning/MS5/Tayarni/API/API.csproj",
       "projectName": "API",
-      "projectPath": "/Users/youssef/Documents/Spring-2024/Machine-Learning/Tayarni/API/API.csproj",
+      "projectPath": "/Users/youssef/Documents/Spring-2024/Machine-Learning/MS5/Tayarni/API/API.csproj",
       "packagesPath": "/Users/youssef/.nuget/packages/",
-      "outputPath": "/Users/youssef/Documents/Spring-2024/Machine-Learning/Tayarni/API/obj/",
+      "outputPath": "/Users/youssef/Documents/Spring-2024/Machine-Learning/MS5/Tayarni/API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/youssef/.nuget/NuGet/NuGet.Config"

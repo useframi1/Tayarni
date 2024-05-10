@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using API.DTOs;
 using API.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -28,59 +26,59 @@ public partial class DataContext : DbContext
 
     public virtual DbSet<UserPrediction> UserPredictions { get; set; }
 
-    //     public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
-    //     {
-    //         var addedEntities = ChangeTracker.Entries<Training>()
-    //             .Where(e => e.State == EntityState.Added)
-    //             .ToList();
+    public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    {
+        var addedEntities = ChangeTracker.Entries<Training>()
+            .Where(e => e.State == EntityState.Added)
+            .ToList();
 
-    //         int result = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        int result = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 
-    //         var optionsBuilder = new DbContextOptionsBuilder<SqliteDataContext>();
-    //         optionsBuilder.UseSqlite("Data source=apiCallTracker.db");
+        var optionsBuilder = new DbContextOptionsBuilder<SqliteDataContext>();
+        optionsBuilder.UseSqlite("Data source=apiCallTracker.db");
 
-    //         using var sqliteDataContext = new SqliteDataContext(optionsBuilder.Options);
-    //         // Get the current count from the tracker table
-    //         var tracker = await sqliteDataContext.ApiCallTracker.FirstOrDefaultAsync();
-    //         if (tracker == null)
-    //         {
-    //             tracker = new ApiCallTracker();
-    //             await sqliteDataContext.ApiCallTracker.AddAsync(tracker);
-    //         }
+        using var sqliteDataContext = new SqliteDataContext(optionsBuilder.Options);
+        // Get the current count from the tracker table
+        var tracker = await sqliteDataContext.ApiCallTracker.FirstOrDefaultAsync();
+        if (tracker == null)
+        {
+            tracker = new ApiCallTracker();
+            await sqliteDataContext.ApiCallTracker.AddAsync(tracker);
+        }
 
-    //         tracker.Count += addedEntities.Count;
+        tracker.Count += addedEntities.Count;
 
-    //         // Check if a certain number of rows have been added
-    //         if (tracker.Count >= 1000)
-    //         {
-    //             // Reset the count
-    //             tracker.Count = 0;
+        // Check if a certain number of rows have been added
+        if (tracker.Count >= 1)
+        {
+            // Reset the count
+            tracker.Count = 0;
 
-    // #pragma warning disable 4014
-    //             Task.Run(() => CallLongRunningApi())
-    //                 .ContinueWith(t =>
-    //                 {
-    //                     if (t.IsFaulted)
-    //                     {
-    //                         // Log the exception
-    //                         var exception = t.Exception;
-    //                         // Handle the exception
-    //                         using var loggerFactory = LoggerFactory.Create(builder =>
-    //                         {
-    //                             builder.AddConsole();
-    //                         });
-    //                         ILogger logger = loggerFactory.CreateLogger<Program>();
-    //                         logger.LogError(exception, "An error occurred while calling the API.");
-    //                     }
-    //                 });
-    // #pragma warning restore 4014
-    //         }
+#pragma warning disable 4014
+            Task.Run(() => CallLongRunningApi())
+                .ContinueWith(t =>
+                {
+                    if (t.IsFaulted)
+                    {
+                        // Log the exception
+                        var exception = t.Exception;
+                        // Handle the exception
+                        using var loggerFactory = LoggerFactory.Create(builder =>
+                        {
+                            builder.AddConsole();
+                        });
+                        ILogger logger = loggerFactory.CreateLogger<Program>();
+                        logger.LogError(exception, "An error occurred while calling the API.");
+                    }
+                });
+#pragma warning restore 4014
+        }
 
-    //         // Save the updated count
-    //         await sqliteDataContext.SaveChangesAsync();
+        // Save the updated count
+        await sqliteDataContext.SaveChangesAsync();
 
-    //         return result;
-    //     }
+        return result;
+    }
 
     private async Task CallLongRunningApi()
     {

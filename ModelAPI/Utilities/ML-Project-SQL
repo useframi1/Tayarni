@@ -1,0 +1,89 @@
+CREATE TABLE Tail_Numbers(
+TailNum  varchar(255) NOT NULL,
+PRIMARY KEY(TailNum) 
+);
+
+CREATE TABLE Airlines(
+AirlineName  varchar(255) NOT NULL,
+UniqueCarrier varchar(255) NOT NULL,
+PRIMARY KEY(Airline)
+);
+
+CREATE TABLE Airports(
+Airport_Name varchar(255) NOT NULL,
+Airport_Code  varchar(255) NOT NULL,
+PRIMARY KEY(Airport_Name)
+);
+
+CREATE TABLE Training(
+ DayOfWeek int NOT NULL,
+ Date  date NOT NULL,
+ ScheduledArrTime  int NOT NULL, 
+ AirlineName  varchar(255) NOT NULL,
+ TailNum   varchar(255) NOT NULL,
+ Org_Airport  varchar(255) NOT NULL,
+ Dest_Airport  varchar(255) NOT NULL,
+ Distance int NOT NULL, 
+ ScheduledDepTime int NOT NULL,
+ ScheduledElapsedTime int NOT NULL,
+ DepTemperature float NOT NULL,
+ DepWindSpeed  float NOT NULL,
+ DepWindDirection float NOT NULL,
+ DepPrecipitation float NOT NULL,
+ DepRain float NOT NULL,
+ DepSnowFall float NOT NULL,
+ ArrTemperature float NOT NULL,
+ ArrWindSpeed  float NOT NULL,
+ ArrWindDirection  float NOT NULL,
+ ArrPrecipitation  float NOT NULL,
+ ArrRain float NOT NULL,
+ ArrSnowFall  float NOT NULL,
+ IsDelayed BIT NOT NULL
+ PRIMARY KEY (
+ ScheduledDepTime,AirlineName,TailNum,Date
+ ),
+ FOREIGN KEY (AirlineName) REFERENCES Airlines(AirlineName),
+ FOREIGN KEY (TailNum) REFERENCES Tail_Numbers(TailNum),
+ FOREIGN KEY (Org_Airport) REFERENCES Airports(Airport_Name),
+ FOREIGN KEY (Dest_Airport) REFERENCES Airports(Airport_Name)
+);
+
+CREATE TABLE Users(
+Username varchar(255) NOT NULL,
+Password varchar(255) NOT NULL,
+PRIMARY KEY (Username)
+);
+
+CREATE TABLE User_Predictions(
+ Username varchar(255) NOT NULL,
+ Date  date NOT NULL,
+ ScheduledArrTime  int NOT NULL, 
+ AirlineName  varchar(255) NOT NULL,
+ TailNum   varchar(255) NOT NULL,
+ Org_Airport  varchar(255) NOT NULL,
+ Dest_Airport  varchar(255) NOT NULL,
+ Distance int NOT NULL, 
+ ScheduledDepTime int NOT NULL,
+ DepTemperature float NOT NULL,
+ DepWindSpeed  float NOT NULL,
+ DepWindDirection float NOT NULL,
+ DepPrecipitation float NOT NULL,
+ DepRain float NOT NULL,
+ DepSnowFall float NOT NULL,
+ ArrTemperature float NOT NULL,
+ ArrWindSpeed  float NOT NULL,
+ ArrWindDirection  float NOT NULL,
+ ArrPrecipitation  float NOT NULL,
+ ArrRain float NOT NULL,
+ ArrSnowFall  float NOT NULL,
+ IsDelayedPredicted BIT NOT NULL,
+ IsDelayedActual BIT
+ PRIMARY KEY (
+ Username,ScheduledDepTime,Date
+ ),
+ FOREIGN KEY (Username) REFERENCES Users(Username),
+ FOREIGN KEY (AirlineName) REFERENCES Airlines(AirlineName),
+ FOREIGN KEY (TailNum) REFERENCES Tail_Numbers(TailNum),
+ FOREIGN KEY (Org_Airport) REFERENCES Airports(Airport_Name),
+ FOREIGN KEY (Dest_Airport) REFERENCES Airports(Airport_Name)
+);
